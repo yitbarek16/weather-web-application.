@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .weather-info {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f1f1f1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+        }
+        .temperature {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .description {
+            text-transform: capitalize;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="mt-5 text-center">Weather App</h1>
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-block">Get Weather</button>
+                </form>
+
+                {% if weather %}
+                    <div class="weather-info text-center mt-4">
+                        <h3>{{ weather.city }}</h3>
+                        <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Weather icon" class="weather-icon">
+                        <p class="temperature">{{ weather.temperature }}°C</p>
+                        <p class="description">{{ weather.description }}</p>
+                    </div>
+                {% elif error_message %}
+                    <div class="alert alert-danger text-center">{{ error_message }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
